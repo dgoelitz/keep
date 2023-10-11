@@ -1,7 +1,9 @@
-import useStateValue from './StateContext';
-import BOARD from './constants';
-import PassTurn from './gameMechanics';
-import RollAllDice from './randomizers';
+import { useStateValue } from './StateContext';
+import { BOARD } from './constants';
+import { PassTurn } from './gameMechanics';
+import { RollAllDice } from './randomizers';
+import { LandOnSpace, MoveSpaceEvent } from './movement';
+import { DrawCard } from './drawCard';
 
 export function ContinueGame() {
   const {
@@ -22,7 +24,7 @@ export function ContinueGame() {
   }
   if (resettingHand) {
     setResettingHand(false);
-    landOnSpace();
+    LandOnSpace();
     return;
   }
   if (damageBeingDealt) {
@@ -54,7 +56,7 @@ function InitialDrawStage() {
 
   while (true) {
     if (hands[playerTurn - 1].length < handSize) {
-      drawCard();
+      DrawCard();
       break;
     }
     if (playerTurn === players) {
@@ -89,5 +91,5 @@ function PlayGameStage() {
     The player is on space ${spaces[playerTurn - 1]} (${BOARD[spaces[playerTurn - 1]]}).
     Start is considered space 0.
   `);
-  document.addEventListener("keyup", moveSpaceEvent);
+  document.addEventListener("keyup", MoveSpaceEvent);
 }

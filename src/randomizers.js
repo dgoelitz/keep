@@ -1,4 +1,4 @@
-import useStateValue from './StateContext';
+import { useStateValue } from './StateContext';
 
 export function RollAllDice(extraDicePlayer) {
   const { 

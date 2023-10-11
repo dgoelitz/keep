@@ -1,6 +1,6 @@
-import useStateValue from './StateContext';
-import ContinueGame from './gameFlow';
-import shuffle from './randomizers';
+import { useStateValue } from './StateContext';
+import { ContinueGame } from './gameFlow';
+import { shuffle } from './randomizers';
 
 export function startGame() {
   console.log("Select number of players by pressing 2, 3, or 4.")
@@ -50,6 +50,8 @@ function ChoosePlayersCountEvent(event) {
   for (const deck in decksTemp) {
     shuffle(decks[deck]);
   }
+  console.log("Did shuffling work?", decksTemp);
+
   setDecks(decksTemp);
 
   ContinueGame();
