@@ -48,9 +48,11 @@ function DiscardEvent(event) {
 
   console.log(`Player ${playerDiscarding} has discarded a ${hands[playerDiscarding - 1][discardNumber - 1]} card.`);
 
-  const updatedHands = [...hands];
-  updatedHands[playerDiscarding - 1].splice(discardNumber - 1, 1);
-  setHands(updatedHands);
+  setHands(prevHands => {
+    const updatedHands = [...prevHands];
+    updatedHands[playerDiscarding - 1].splice(discardNumber - 1, 1);
+    return updatedHands;
+  });
   
   document.removeEventListener("keyup", DiscardEvent);
   ContinueGame();

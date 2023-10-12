@@ -1,8 +1,9 @@
 import { useStateValue } from './StateContext';
 import { CARD_INPUT_KEY } from './constants';
 import { ContinueGame } from './gameFlow';
+import { CheckAndResetTokens } from './passingStart';
 
-function PassTurn() {
+export function PassTurn() {
   const { 
     gameOver,
     players,
@@ -27,7 +28,7 @@ function PassTurn() {
   }
 }
 
-function LoseTheGame(player) {
+export function LoseTheGame(player) {
   const { 
     setGameOver,
     setDrawOrDiscardCounter,
@@ -38,7 +39,7 @@ function LoseTheGame(player) {
   console.log(`Player ${player} has lost the game.`);
   lost[player - 1] = true;
   tokens[player - 1] = false;
-  checkAndResetTokens();
+  CheckAndResetTokens();
   setDrawOrDiscardCounter(0);
 
   let playersRemaining = [];

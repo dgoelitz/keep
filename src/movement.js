@@ -4,6 +4,11 @@ import { ContinueGame } from './gameFlow';
 import { PassTurn } from './gameMechanics';
 import { RollAllDice } from './randomizers';
 import { Discard } from './discardCard';
+import { ResetHandSize } from './passingStart';
+import { AdjustDice } from './adjustDice';
+import { PlaySwordCard } from './playSword';
+import { PlayShieldCard } from './playShield';
+import { PlayBootsCard } from './playBoots';
 
 export function MoveSpaceEvent(event) {
   const { 
@@ -31,7 +36,7 @@ export function MoveSpaceEvent(event) {
   SetBoardPosition(moveNumber);
 }
 
-function SetBoardPosition(moveNumber) {
+export function SetBoardPosition(moveNumber) {
   const {
     playerTurn,
     spaces
@@ -41,7 +46,7 @@ function SetBoardPosition(moveNumber) {
 
   if (spaces[playerTurn - 1] > 15) {
     spaces[playerTurn - 1] -= 16;
-    resetHandSize(moveNumber);
+    ResetHandSize(moveNumber);
     return;
   }
 
@@ -58,13 +63,13 @@ export function LandOnSpace() {
 
   switch (BOARD[spaces[playerTurn - 1]]) {
     case "w":
-      playSwordCard();
+      PlaySwordCard();
       break;
     case "h":
-      playShieldCard();
+      PlayShieldCard();
       break;
     case "b":
-      playBootsCard();
+      PlayBootsCard();
       break;
     case "start":
       PassTurn();
@@ -81,7 +86,7 @@ export function LandOnSpace() {
         PassTurn();
       break;
     case "adjust":
-      adjustDice();
+      AdjustDice();
       break;
     default:
       throw new Error(`${BOARD[spaces[playerTurn - 1]]} is not a valid space.`)

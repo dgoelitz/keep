@@ -1,7 +1,10 @@
 import logo from './logo.svg';
 import './App.css';
+import { StartGame } from './beginGame';
 
 function App() {
+  StartGame();
+
   return (
     <div className="App">
       <header className="App-header">

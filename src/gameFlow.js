@@ -4,6 +4,8 @@ import { PassTurn } from './gameMechanics';
 import { RollAllDice } from './randomizers';
 import { LandOnSpace, MoveSpaceEvent } from './movement';
 import { DrawCard } from './drawCard';
+import { Discard } from './discardCard';
+import { SwordDamage } from './playSword';
 
 export function ContinueGame() {
   const {
@@ -19,7 +21,7 @@ export function ContinueGame() {
 
   if (gameOver) return;
   if (gameInDrawOrDiscardLoop) {
-    drawOrDiscardLoop();
+    DrawOrDiscardLoop();
     return;
   }
   if (resettingHand) {
@@ -28,7 +30,7 @@ export function ContinueGame() {
     return;
   }
   if (damageBeingDealt) {
-    swordDamage();
+    SwordDamage();
     return;
   }
   if (changeTurnAfterLoop) {
@@ -92,4 +94,29 @@ function PlayGameStage() {
     Start is considered space 0.
   `);
   document.addEventListener("keyup", MoveSpaceEvent);
+}
+
+export function DrawOrDiscardLoop() {
+  const {
+    setGameInDrawOrDiscardLoop,
+    drawOrDiscardCounter,
+    setDrawOrDiscardCounter,
+    playerDiscarding
+  } = useStateValue();
+
+  setGameInDrawOrDiscardLoop(true);
+  if (drawOrDiscardCounter > 0) {
+    setDrawOrDiscardCounter(drawOrDiscardCounter - 1);
+    DrawCard();
+    return;
+  }
+
+  if (drawOrDiscardCounter < 0) {
+    setDrawOrDiscardCounter(drawOrDiscardCounter + 1);
+    Discard(playerDiscarding);
+    return;
+  }
+
+  setGameInDrawOrDiscardLoop(false);
+  ContinueGame();
 }

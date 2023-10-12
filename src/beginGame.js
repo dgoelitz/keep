@@ -2,12 +2,15 @@ import { useStateValue } from './StateContext';
 import { ContinueGame } from './gameFlow';
 import { shuffle } from './randomizers';
 
-export function startGame() {
+export function StartGame() {
   console.log("Select number of players by pressing 2, 3, or 4.")
   document.addEventListener("keyup", ChoosePlayersCountEvent);
 }
 
 function ChoosePlayersCountEvent(event) {
+  console.log("Is the beforrre after useStateValue?????");
+
+
   const { 
     players,
     setPlayers, 
@@ -18,6 +21,8 @@ function ChoosePlayersCountEvent(event) {
     decks,
     setDecks
   } = useStateValue();
+
+  console.log("Is the error after useStateValue?????");
 
   const selection = parseInt(event.key);
   if (selection < 2 || selection > 4 || Number.isNaN(selection)) return;
@@ -48,7 +53,7 @@ function ChoosePlayersCountEvent(event) {
 
   let decksTemp = decks.slice();
   for (const deck in decksTemp) {
-    shuffle(decks[deck]);
+    shuffle(decksTemp[deck]);
   }
   console.log("Did shuffling work?", decksTemp);
 
